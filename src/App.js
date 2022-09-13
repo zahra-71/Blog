@@ -13,7 +13,7 @@ import Sidebar from "./components/Sidebar";
 function App(props) {
 
   const memoizedSections = useMemo(() => [
-    {title: "تکنولوژی", url: "#"},
+    {title: "تکنولوژی", url: "/"},
     {title: "طراحی", url: "#"},
     {title: "سیاست", url: "#"},
     {title: "دانش", url: "#"},
@@ -47,21 +47,21 @@ function App(props) {
       date: '11 آبان',
       description:
       'متن ویژه پست در آبان ماه سال 1400 که ویژه این پست می‌باشد.',
-      image: 'https://source.unsplash.com/random',
+      image: 'https://source.unsplash.com//random',
       imageLabel: 'متن عکس',
     }], []
   )
 
-
   const [postone, setPostone] = useState("")
   const [posttwo, setPosttwo] = useState("")
+
   useEffect(() => {
     const firstPath = require("./components/BlogPost/blog-post1.md");
     fetch(firstPath)
     .then(response => response.text())
     .then(text => setPostone(text))
     .catch((err) => console.error(err));
-  }, [])
+  }, [postone])
 
   useEffect(() => {
     const secondPath = require("./components/BlogPost/blog-post2.md");
@@ -69,11 +69,8 @@ function App(props) {
     .then(response => response.text())
     .then(text => setPosttwo(text))
     .catch((err) => console.error(err));
-  }, [])
-
-
+  }, [posttwo])
   
-// console.log("posts", postone, posttwo)
   const memoizesSidebar = useMemo(() => ({
     title: 'درباره',
     description:
@@ -105,13 +102,13 @@ function App(props) {
         <main>
           <MainFeaturedPost post={memoizedMainFeaturedPost} />
           <Grid container spacing={4}>
-          {memoizedFeaturePost.map((post) => (
+            {memoizedFeaturePost.map((post) => (
               <FeaturedPost key={post.title} post={post} />
-          ))}
+            ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-              <Main title="پست‌های فرمت md" postone={postone} posttwo={posttwo} />
-              <Sidebar sidebar={memoizesSidebar} />
+            <Main title="پست‌های فرمت md" postone={postone} posttwo={posttwo} />
+            <Sidebar sidebar={memoizesSidebar} />
           </Grid>
         </main>
       </Container>
